@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.blf2.dao.IWorkShop">
+    <resultMap id="WorkShopResultMap" type="net.blf2.entity.WorkShop">
+        <id property="workShopNum" column="workShopNum"/>
+        <result property="workShopName" column="workShopName" />
+        <result property="workShopAdmin" column="workShopAdmin"/>
+        <result property="workShopDesc" column="workShopDesc"/>
+    </resultMap>
+
+    <sql id="WorkShopColums">
+       workShopNum,workShopName,workShopAdmin,workShopDesc
+    </sql>
+
+    <select id="queryWorkShopByWorkShopNum" resultMap="WorkShopResultMap" parameterType="String"
+            statementType="PREPARED">
+        SELECT
+        <include refid="WorkShopColums"/>
+        FROM WorkShop
+        WHERE
+        workShopNum = #{workShopNum}
+    </select>
+
+    <select id="queryWorkShopAll" statementType="PREPARED" resultMap="WorkShopResultMap">
+        SELECT
+        <include refid="WorkShopColums"/>
+        FROM WorkShop
+    </select>
+
+    <insert id="insertWorkShop">
+        INSERT INTO WorkShop(
+        <include refid="WorkShopColums" />
+        )
+        VALUES(
+        <!-- workShopNum,workShopName,workShopAdmin,workShopDesc -->
+        #{workShopNum},#{workShopName},#{workShopAdmin},#{workShopDesc}
+        )
+    </insert>
+
+    <update id="updateWorkShop" statementType="PREPARED" flushCache="true" timeout="20000">
+        UPDATE
+        WorkShop
+        <trim prefix="set" suffixOverrides=",">
+            <if test="workShopName != null">
+                workShopName = #{workShopName},
+            </if>
+            <if test="workShopAdmin != null">
+                workShopAdmin = #{workShopAdmin},
+            </if>
+            <if test="workShopDesc != null">
+                workShopDesc = #{workShopDesc}
+            </if>
+        </trim>
+        WHERE
+        workShopNum = #{workShopNum}
+    </update>
+
+    <delete id="deleteWorkShopByWorkShopNum" flushCache="true" parameterType="String"
+            statementType="PREPARED" timeout="20000">
+        DELETE FROM WorkShop WHERE workShopNum = #{workShopNum}
+    </delete>
+</mapper>

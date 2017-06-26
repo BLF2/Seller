@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>index</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous" />
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link th:href="@{/signin.css}" rel="stylesheet"/>
+    <link th:remove="tag" href="http://v3.bootcss.com/examples/signin/signin.css" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="frameworks::MyNav"></div>
+<div th:replace="frameworks::alertInfo"></div>
+<div class="container">
+    <form class="form-signin" method="post" action="/User/login">
+        <h2 class="form-signin-heading">请登录</h2>
+        <label for="userId" class="sr-only">用户ＩＤ</label>
+        <input type="text" id="userId" name="userId" class="form-control"  required="required" autofocus="autofocus" />
+        <label for="userPswd" class="sr-only">密码</label>
+        <input type="password" id="userPswd" name="userPswd" class="form-control" required="required" />
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me" /> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>

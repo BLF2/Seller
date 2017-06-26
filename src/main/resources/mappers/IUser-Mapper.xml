@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.blf2.dao.IUserDao">
+    <resultMap id="UserInfoResultMap" type="net.blf2.entity.UserInfo">
+        <id property="userId" column="userId"/>
+        <result property="userName" column="userName" />
+        <result property="userPswd" column="userPswd"/>
+        <result property="userRole" column="userRole"/>
+        <result property="belongTo" column="belongTo"/>
+    </resultMap>
+
+    <sql id="UserInfoColumns">
+        userId,userName,userPswd,userRole,belongTo
+    </sql>
+
+
+    <sql id="insertUserInfoColumns">
+        userId,userName,userPswd,userRole,belongTo
+    </sql>
+
+    <select id="queryUserInfoByUserId" resultMap="UserInfoResultMap" parameterType="String"
+            statementType="PREPARED">
+        SELECT
+        <include refid="UserInfoColumns"/>
+        FROM UserInfo
+        WHERE
+        UserInfo.userId = #{userId}
+    </select>
+
+    <select id="queryUserInfoAll" statementType="PREPARED" resultMap="UserInfoResultMap">
+        SELECT
+        <include refid="UserInfoColumns"/>
+        FROM UserInfo
+    </select>
+
+    <select id="queryUserInfoByWorkShopNum" resultMap="UserInfoResultMap">
+        SELECT
+        <include refid="UserInfoColumns"/>
+        FROM UserInfo
+        WHERE belongTo = #{workShopNum}
+    </select>
+
+    <insert id="insertUserInfo">
+        INSERT INTO UserInfo(
+        <include refid="insertUserInfoColumns" />
+        )
+        VALUES(
+        #{userId},#{userName},#{userPswd},#{userRole},#{belongTo}
+        )
+    </insert>
+
+    <update id="updateUserInfo" statementType="PREPARED" flushCache="true" timeout="20000">
+        UPDATE
+        UserInfo
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName != null">
+                userName = #{userName},
+            </if>
+            <if test="userPswd != null">
+                userPswd = #{userPswd},
+            </if>
+          <if test="userRole != null">
+              userRole = #{userRole},
+          </if>
+            <if test="belongTo != null">
+                belongTo = #{belongTo}
+            </if>
+        </trim>
+        WHERE
+        userId = #{userId}
+    </update>
+
+    <delete id="deleteUserInfoByUserId" flushCache="true" parameterType="String"
+            statementType="PREPARED" timeout="20000">
+        DELETE FROM UserInfo WHERE userId = #{userId}
+    </delete>
+</mapper>

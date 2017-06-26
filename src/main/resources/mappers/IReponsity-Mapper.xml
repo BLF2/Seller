@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.blf2.dao.IReponsity">
+    <resultMap id="ReponsityResultMap" type="net.blf2.entity.ReponsityIo">
+        <id property="reponsityNum" column="reponsityNum"/>
+        <result property="materialsName" column="materialsName" />
+        <result property="materialsOp" column="materialsOp"/>
+        <result property="measurementUnit" column="measurementUnit"/>
+        <result property="pricePerUnit" column="pricePerUnit"/>
+        <result property="totalCost" column="totalCost"/>
+        <result property="currentAdminId" column="currentAdminId"/>
+        <result property="currentAdminName" column="currentAdminName"/>
+        <result property="ioPersonId" column="ioPersonId"/>
+        <result property="ioPersonName" column="ioPersonName"/>
+        <result property="operateDateTime" column="operateDateTime"/>
+    </resultMap>
+
+    <sql id="ReponsityColums">
+        reponsityNum,materialsName,materialsOp,measurementUnit,pricePerUnit,totalCost,currentAdminId,
+        currentAdminName,ioPersonId,ioPersonName,operateDateTime,measurementNum
+    </sql>
+
+    <select id="queryReponsityByNum" resultMap="ReponsityResultMap" parameterType="String"
+            statementType="PREPARED">
+        SELECT
+        <include refid="ReponsityColums"/>
+        FROM ReponsityIo
+        WHERE
+        reponsityNum = #{reponsityNum}
+    </select>
+
+    <select id="queryReponsityAll" statementType="PREPARED" resultMap="ReponsityResultMap">
+        SELECT
+        <include refid="ReponsityColums"/>
+        FROM ReponsityIo
+    </select>
+
+    <insert id="insertReponsity">
+        INSERT INTO ReponsityIo(
+        <include refid="ReponsityColums" />
+        )
+        VALUES(
+        #{reponsityNum},#{materialsName},#{materialsOp},#{measurementUnit},#{pricePerUnit},#{totalCost},#{currentAdminId},
+        #{currentAdminName},#{ioPersonId},#{ioPersonName},#{operateDateTime},#{measurementNum}
+        )
+    </insert>
+
+    <update id="updateReponsity" statementType="PREPARED" flushCache="true" timeout="20000">
+        UPDATE
+        ReponsityIo
+        <trim prefix="set" suffixOverrides=",">
+            <if test="materialsName != null">
+                materialsName = #{materialsName},
+            </if>
+            <if test="materialsOp != null">
+                materialsOp = #{materialsOp},
+            </if>
+            <if test="measurementUnit != null">
+                measurementUnit = #{measurementUnit},
+            </if>
+            <if test="pricePerUnit != null" >
+                pricePerUnit = #{pricePerUnit},
+            </if>
+            <if test="totalCost != null">
+                totalCost = #{totalCost},
+            </if>
+            <if test="currentAdminId != null">
+                currentAdminId = #{currentAdminId},
+            </if>
+            <if test="currentAdminName != null">
+                currentAdminName = #{currentAdminName},
+            </if>
+            <if test="ioPersonId != null">
+                ioPersonId = #{ioPersonId},
+            </if>
+            <if test="ioPersonName != null">
+                ioPersonName = #{ioPersonName},
+            </if>
+            <if test="operateDateTime != null">
+                operateDateTime = #{operateDateTime},
+            </if>
+            <if test="measurementNum != null">
+                measurementNum = #{measurementNum}
+            </if>
+        </trim>
+        WHERE reponsityNum = #{reponsityNum}
+    </update>
+
+    <delete id="deleteReponsityByNum" flushCache="true" parameterType="String"
+            statementType="PREPARED" timeout="20000">
+        DELETE FROM ReponsityIo WHERE reponsityNum = #{reponsityNum}
+    </delete>
+</mapper>

@@ -1,0 +1,233 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>main</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous" />
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="frameworks::MyNav"></div>
+<div th:replace="frameworks::alertInfo"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar" style="background-color:#f5f5f5;height: 100%;">
+            <ul class="nav nav-sidebar">
+                <li class="active">
+                    <b><h4>员工数据管理</h4></b>
+                </li>
+                <li class="active">
+                    <a href="/User/toMain">人员信息管理</a>
+                </li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li>
+                    <b><h4>生产车间管理</h4></b>
+                </li>
+                <li>
+                    <a href="/WorkShop/toWorkShop">车间管理</a>
+                </li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li>
+                    <b><h4>材料仓库管理</h4></b>
+                </li>
+                <li>
+                    <a href="/Repon/toRepon">材料出入库管理</a>
+                </li>
+                <li>
+                    <a>新材料登记</a>
+                </li>
+
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li>
+                    <b><h4>原料仓库管理</h4></b>
+                </li>
+                <li class="active">
+                    <a href="#">原料入库管理</a>
+                </li>
+                <li>
+                    <a href="#">采购登记</a>
+                </li>
+
+            </ul>
+
+
+
+            <ul class="nav nav-sidebar">
+                <li>
+                    <b><h4>产品销售管理</h4></b>
+                </li>
+                <li>
+                    <a>产品出库</a>
+                </li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li>
+                    <b><h4>磅单管理</h4></b>
+                </li>
+                <li>
+                    <a>过磅单</a>
+                </li>
+                <li>
+                    <a>单位管理</a>
+                </li>
+                <li>
+                    <a>车号管理</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-bordered">
+                <tr>
+                    <td>序号</td>
+                    <td>姓名</td>
+                    <td>登录Id</td>
+                    <td>密码</td>
+                    <td>角色</td>
+                    <td>所属车间</td>
+                    <td>操作</td>
+                </tr>
+                <tr th:each="userInfo : ${UserAll}">
+                    <td th:text="${userInfoStat.count}">1</td>
+                    <td id="userName1" th:id="${'userName'+userInfoStat.count}" th:text="${userInfo.userName}">曹聪</td>
+                    <td id="userId1" th:id="${'userId'+userInfoStat.count}" th:text="${userInfo.userId}">入1001</td>
+                    <td id="userPswd1" th:id="${'userPswd'+userInfoStat.count}" th:text="${userInfo.userPswd}">123456</td>
+                    <td id="userRole1" th:id="${'userRole'+userInfoStat.count}" th:text="${userInfo.userRole}">admin</td>
+                    <td id="belongTo1" th:id="${'belongTo'+userInfoStat.count}" th:text="${userInfo.belongTo}">cj001</td>
+                    <td>
+                        <a th:href="@{/User/delete(userId=${userInfo.userId})}" onclick="javascript:return confirm('是否确认删除？')">
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-primary btn-lg"
+                                data-toggle="modal" data-target="#editUserInfo" onclick="change(1)" th:onclick="'change('+${userInfoStat.count}+')'">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary btn-lg"
+                                data-toggle="modal" data-target="#editUserInfo" onclick="addUser(1)" th:onclick="'addUser('+${userInfoStat.count}+')'">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                <tr th:remove="all">
+                    <td>2</td>
+                    <td>草丛</td>
+                    <td>1002</td>
+                    <td>12345</td>
+                    <td>primary</td>
+                    <td>cj002</td>
+                    <td>
+                        <a href="#" onclick="javascript:return confirm('是否确认删除？')">
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-primary btn-lg"
+                                data-toggle="modal" data-target="#editUserInfo" onclick="change(2)">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary btn-lg"
+                                data-toggle="modal" data-target="#editUserInfo" onclick="addUser(2)">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+                <tr th:remove="all">
+                    <td>3</td>
+                    <td>ｍｅｎｇｘｉａｎｈｏｕ</td>
+                    <td>1003</td>
+                    <td>12345</td>
+                    <td>primary</td>
+                    <td>cj003</td>
+                    <td>
+                        <a href="#" onclick="javascript:return confirm('是否确认删除？')">
+                            <button type="button" class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-primary btn-lg"
+                                data-toggle="modal" data-target="#editUserInfo" onclick="change(3)">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-primary btn-lg"
+                                data-toggle="modal" data-target="#editUserInfo" onclick="addUser(3)">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editUserInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="/User/updateUser" id="userEditorForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editUserId">工号</label>
+                        <input type="text" class="form-control" id="editUserId" name="userId"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserName">姓名</label>
+                        <input type="text" class="form-control" id="editUserName" name="userName"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserPswd">密码</label>
+                        <input type="text" class="form-control" id="editUserPswd" name="userPswd"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserRole">角色</label>
+                        <input type="text" class="form-control" id="editUserRole" name="userRole"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBelongTo">车间</label>
+                        <input type="text" class="form-control" id="editBelongTo" name="belongTo"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function change(id){
+        document.getElementById('userEditorForm').setAttribute('action','/User/updateUser');
+        document.getElementById('myModalLabel').innerHTML = '修改用户信息';
+        document.getElementById('editUserId').value=document.getElementById('userId'+id).innerHTML;
+        document.getElementById('editUserId').setAttribute('readonly','readonly');
+        document.getElementById('editUserName').value=document.getElementById('userName'+id).innerHTML;
+        document.getElementById('editUserPswd').value=document.getElementById('userPswd'+id).innerHTML;
+        document.getElementById('editUserRole').value=document.getElementById('userRole'+id).innerHTML;
+        document.getElementById('editBelongTo').value=document.getElementById('belongTo'+id).innerHTML;
+    }
+    function addUser(id) {
+        document.getElementById('userEditorForm').setAttribute('action','/User/addUser');
+        document.getElementById('myModalLabel').innerHTML = '增加用户信息';
+        document.getElementById('editUserId').removeAttribute('readonly');
+        document.getElementById('editUserName').value='';
+        document.getElementById('editUserId').value='';
+        document.getElementById('editUserPswd').value='';
+        document.getElementById('editUserRole').value='';
+        document.getElementById('editBelongTo').value='';
+
+    }
+</script>
+</body>
+</html>

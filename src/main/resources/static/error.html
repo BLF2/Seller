@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Error</title>
+</head>
+<body>
+<div>
+    <h2 th:text="${ErrorMessage != null ? ErrorMessage : '未处理的错误'}"></h2>
+</div>
+</body>
+</html>
